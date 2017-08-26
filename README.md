@@ -7,9 +7,9 @@
 
  百度地图
  
- 百度地图的使用
+ 百度地图的使用 
  
-      地址 - http://developer.baidu.com/map/	
+ [地址 - http://developer.baidu.com/map/](http://developer.baidu.com/map/)	
  
 
 
@@ -39,7 +39,9 @@
 
 
 百度地图API
+
 核心类
+
      Map
          构造器 - new BMap.Map(容器的ID)
          返回一个Map核心对象
@@ -65,18 +67,73 @@
 
 
 基础类
+
       Point
           构造器 - new BMap.Point(lng,lat)
              属性
              lng - 表示经度
              lat - 表示纬度
+	     
  控件类
+ 
        ScaleControl - 比例尺
        NavigationControl - 缩放和平移
        MapTypeControl - 地图类型
+       
  遮盖物类
+ 
        Marker - 标注
        InfoWindow - 信息窗口
+       
  右键菜单类
+ 
        ContextMenu - 自定义菜单
        MenuItem - 菜单选项                                           
+
+
+all code:
+```
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>百度地图地址解析</title>
+    <style>
+        body, html,#allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin:0;
+            /*font-family:"微软雅黑";*/
+        }
+        #allmap{
+            width:600px;
+            height:300px;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=327GGLm6A62GfdvGy3L48b6P1clK2QRe"></script>
+<script>
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(116.331398,39.897445);
+    map.centerAndZoom(point,12);
+    // 创建地址解析器实例
+    var myGeo = new BMap.Geocoder();
+    // 将地址解析结果显示在地图上,并调整地图视野
+    myGeo.getPoint("广州市荔湾区坦尾村", function(point){
+        if (point) {
+            map.centerAndZoom(point, 16);
+            map.addOverlay(new BMap.Marker(point));
+        }else{
+            alert("您选择地址没有解析到结果!");
+        }
+    }, "北京市");
+</script>
+```
